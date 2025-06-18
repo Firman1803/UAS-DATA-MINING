@@ -1,7 +1,9 @@
-import pandas as pd
+# model_training.py
 from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
 import joblib
 
+# Load & siapkan data
 df = pd.read_csv("data/dataset.csv", header=None)
 df = df[0].str.split(";", expand=True)
 df.columns = ["Asal", "Biaya", "Minat", "Akses", "Kualitas", "Memilih"]
@@ -9,7 +11,9 @@ df.columns = ["Asal", "Biaya", "Minat", "Akses", "Kualitas", "Memilih"]
 X = df[["Asal", "Biaya", "Minat", "Akses", "Kualitas"]].astype(int)
 y = df["Memilih"]
 
+# Latih model
 model = RandomForestClassifier()
 model.fit(X, y)
 
-joblib.dump(model, "model/model.pkl")
+# Simpan model dengan joblib, cara aman
+joblib.dump(model, "model/model.pkl", compress=3)
