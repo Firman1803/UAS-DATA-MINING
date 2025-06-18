@@ -1,0 +1,15 @@
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+import joblib
+
+df = pd.read_csv("data/dataset.csv", header=None)
+df = df[0].str.split(";", expand=True)
+df.columns = ["Asal", "Biaya", "Minat", "Akses", "Kualitas", "Memilih"]
+
+X = df[["Asal", "Biaya", "Minat", "Akses", "Kualitas"]].astype(int)
+y = df["Memilih"]
+
+model = RandomForestClassifier()
+model.fit(X, y)
+
+joblib.dump(model, "model/model.pkl")
